@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <style>
+        body{
+            width: 100%;
+            margin: 0 !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 90%;
+            /* min-width: 500px; */
+            max-width: 900px;
+            box-shadow: 2px 2px 20px rgba(128, 128, 128, 0.363);
+            margin-bottom: 20px;
+            padding: 5%;
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+        }
+        
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(106, 83, 68);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: rgb(86, 63, 48);
+        }
+
+        .voucher{
+            width: 100%;
+            min-width: 500px;
+            max-width: 900px;
+            box-shadow: 2px 2px 20px rgba(128, 128, 128, 0.363);
+            display: none;
+
+        }
+
+        header{
+            width: 100%;
+            /* height: 100px; */
+            /* background-image: url('kaabah2.jpg'); */
+            background-size: contain;
+            background-position: right;
+            background-repeat: no-repeat;
+        }
+
+        .cover {
+            /* width: 100%; */
+            height: 100%;
+            /* background: linear-gradient(90deg, rgb(106, 83, 68) 50%, rgba(0, 0, 0, 0)); */
+
+        }
+
+        .title{
+            width: 100%;
+            color: rgb(106, 83, 68);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-shadow: 1px 1px rgba(128, 128, 128, 0.555);
+        }
+
+        .title img {
+            width: 30%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: rgb(106, 83, 68);
+        }
+
+        .in {
+            padding: 10px 70px;
+        }
+
+        .personalinfo{
+            line-height: 0.5;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            font-size: x-small;
+        }
+
+        .personalinfo span {
+            font-weight: bolder;
+        }
+
+        .tripinfo h2 {
+            font-size: small;
+            width: 100%;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            font-size: xx-small;
+            border-collapse: collapse;
+            text-wrap: wrap;
+            text-wrap-style: auto;
+            text-wrap-mode: wrap;
+        }
+
+        thead {
+            background-color: rgb(106, 83, 68);
+            color: white;
+
+        }
+
+        th, td {
+            margin: 0;
+            padding: 10px;
+            max-width: 100px;
+        }
+
+        .contact {
+            font-size: small;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0.5;
+            flex-wrap: wrap;
+        }
+
+        .contact h2 {
+            width: 100%;
+            text-align: center;
+            font-size: small;
+            margin-top: 40px;
+        }
+
+        .contact span {
+            font-weight: bolder;
+        }
+
+        .contactpersons {
+            font-size: x-small;
+        }
+
+        .flightinfo, .hotelinfo {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover {
+            display: flex;
+            align-items: end;
+            justify-content: flex-start;
+        }
+
+        .cover img:first-child {
+            margin-right: 0;
+        }
+        .cover3 img {
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
+        .cover2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(106, 83, 68, 0.6
+            );
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .cover3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .head {
+            /* width: 100%; */
+            height: 100vh;
+            background-image: url('curved5-small.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+            top: 0;
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        div {
+            background-color: #fff;
+        }
+
+        .form-container{
+            margin-top: 0;
+        }
+
+        button {
+            border-radius: 200px;
+            width: 50% !important;
+            margin: 2px auto;
+        }
+        
+        /* #voucherForm {
+            display: flex;
+        } */
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: xx-large;
+            flex-wrap: wrap;
+            text-align: center;
+            align-content: center;
+
+        }
+
+        .logo h1 {
+            /* width: 100%; */
+            margin-top: 0;
+        }
+
+        .logo img {
+            background: none;
+            width: 50%;
+        }
+
+        @keyframes ro {
+            0%{
+                transform: rotateX(0deg);
+                transform: rotateY(0deg);
+            }
+            100%{
+                transform: rotateX(360deg);
+                transform: rotateY(360deg);
+                
+            }
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .divider img {
+            width: 150px;
+        }
+
+        #qrcode {
+            width: 100px !important;
+            height: 100px !important;
+        }
+
+        .qrcode {
+            width: 80%;
+            padding: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section class="head">
+        <div class="cover2">
+            <div class="logo">
+                <img src="3dgifmaker95690.gif" alt="">
+                <h1>ABUKHALID TRAVELLING AGENCY</h1>
+            </div>
+        </div>
+    </section>
+
+    <div class="form-container">
+        <div class="title">
+            <h1>Generate Umrah Voucher</h1>
+        </div>
+        <form id="voucherForm">
+            <div>
+                <div class="form-group">
+                    <h2>Sub Agent</h2>
+                    <label for="subAgent">Sub Agent:</label>
+                    <input type="text" id="subAgent" required>
+                </div>
+            </div>
+
+            <div id="passengers">
+                <h2>Passenger Information</h2>
+                <div class="form-group passenger-group">
+                    <label for="passengername">Full Name</label>
+                    <input type="text" class="passengername" required>
+                    <label for="passportnumber">Passport Number</label>
+                    <input type="text" class="passportnumber" required>
+                    <label for="groupnumber">Group Number</label>
+                    <input type="text" class="groupnumber" required>
+                    <label for="visacompany">Visa Company</label>
+                    <input type="text" class="visacompany" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="addPassenger()">Add Another Passenger</button>
+            </div>
+            
+            <div id="flights">
+                <h2>Flight Information</h2>
+                <div class="form-group flight-group">
+                    <label for="cityFrom">City From:</label>
+                    <input type="text" class="cityFrom" required>
+                    <label for="cityTo">City To:</label>
+                    <input type="text" class="cityTo" required>
+                    <label for="flightDate">Flight Date:</label>
+                    <input type="date" class="flightDate" required>
+                    <label for="etd">ETD:</label>
+                    <input type="time" class="etd" required>
+                    <label for="eta">ETA:</label>
+                    <input type="time" class="eta" required>
+                    <label for="carrier">Carrier:</label>
+                    <input type="text" class="carrier" required>
+                    <label for="flightNo">Flight No.:</label>
+                    <input type="text" class="flightNo" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="addFlight()">Add Another Flight</button>
+            </div>
+    
+            <div id="hotels">
+                <h2>Hotel Information</h2>
+                <div class="form-group hotel-group">
+                    <label for="hotelCity">Hotel City:</label>
+                    <input type="text" class="hotelCity" required>
+                    <label for="hotelName">Hotel Name:</label>
+                    <input type="text" class="hotelName" required>
+                    <label for="checkInDate">Check-In Date:</label>
+                    <input type="date" class="checkInDate" required>
+                    <label for="checkOutDate">Check-Out Date:</label>
+                    <input type="date" class="checkOutDate" required>
+                    <label for="roomType">Room Type:</label>
+                    <input type="text" class="roomType" required>
+                    <label for="checkInTime">Check-In Time:</label>
+                    <input type="time" class="checkInTime" required>
+                    <label for="nights">No. of Nights:</label>
+                    <input type="number" class="nights" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="addHotel()">Add Another Hotel</button>
+            </div>
+
+            <!-- <div id="contacts">
+                <h2>Contact Information</h2>
+                <div class="form-group contact-group">
+                    <label for="contactperson">Contact Person</label>
+                    <input type="text" class="contactperson" required placeholder="Eg. Jeddah: +1234567890">
+                </div>                
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="addContact()">Add Another Contact</button>
+            </div> -->
+            
+            <div class="form-group">
+                <button type="button" onclick="generateVoucher()">Generate Voucher</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="voucher" style="">
+        <header>
+            <div class="cover">
+                <div class="title">
+                    <img src="Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png" alt="">
+                    <h1>ABUKHALID TRAVELLLING AGENCY</h1>
+                </div>
+            </div>
+        </header>
+        <div class="in">
+        <div class="personalinfo">
+            <div class="info">
+                <h2>Umrah Voucher</h2>
+                <p><span>Total Number of Passengers: </span><span id="totalPassengers">0</span></p>
+                <p><span>Sub Agent: </span><span id="subAgentDisplay"></span></p>
+            </div>
+            <h2 id="year"></h2>
+        </div>
+        <div class="divider">
+            <img src="divider.webp" alt="">
+        </div>
+        <div class="tripinfo">
+            <div class="flightinfo">
+                <h2>PASSENGER INFORMATION</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>PASSPORT NO.</th>
+                            <th>GROUP NO.</th>
+                            <th>VISA COMPANY</th>
+                        </tr>
+                    </thead>
+                    <tbody id="passengerList">
+                        <!-- add passengers here-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="flightinfo">
+                <h2>FLIGHT INFORMATION</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>FROM</th>
+                            <th>TO</th>
+                            <th>DATE</th>
+                            <th>ETD</th>
+                            <th>ETA</th>
+                            <th>CARRIER</th>
+                            <th>FLIGHT NO.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flightList">
+                       <!-- Add flight info here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="hotelinfo">
+                <h2>HOTEL INFORMATION</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CITY</th>
+                            <th>HOTEL</th>
+                            <th colspan="2">DATE</th>
+                            <th>ROOM TYPE</th>
+                            <th>CHECK-IN TIME</th>
+                            <th>NO. OF NIGHT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hotelList">
+                        <!-- add hotel info here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="divider">
+            <img src="divider.webp" alt="">
+        </div>
+        <div class="contact">
+            <h2>CONTACT PERSONS</h2>
+            <div class="contactpersons" id="contactList">
+                <p>JEDDAH: +966508229687, +966592221175, +966566092788</p>
+                <p>MADINA: +966540208267, +966561760381</p>
+                <p>MAKKAH +966592020885, +966540216152, +966547663844</p>
+            </div>
+        </div>
+
+        <div class="qrcode">
+            <!-- <h2>Scan to View Voucher</h2> -->
+            <canvas id="qrcode" height="100px" width="100px"></canvas>
+        </div>
+
+        </div>
+        
+        <div class="cover3">
+            <img src="WhatsApp Image 2024-07-23 at 12.08.28 PM.jpeg" alt="">
+            <img src="WhatsApp Image 2024-07-23 at 12.08.29 PM.jpeg" alt="">
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group">
+        <button type="button" onclick="downloadVoucher()">Download Voucher</button>
+    </div>
+
+<script>
+
+    var d = new Date().getFullYear();
+    var dd = new Date().getFullYear() + 1;
+
+    document.getElementById('year').innerHTML = d + " - " + dd;
+    // Function to add passenger fields
+    function addPassenger() {
+        const passengers = document.getElementById('passengers');
+        const passengerGroup = document.createElement('div');
+        passengerGroup.classList.add('form-group', 'passenger-group');
+        passengerGroup.innerHTML = `
+            <label for="passengername">Name</label>
+            <input type="text" class="passengername" required>
+            <label for="passportnumber">Passport Number</label>
+            <input type="text" class="passportnumber" required>
+            <label for="groupnumber">Group Number</label>
+            <input type="text" class="groupnumber" required>
+            <label for="visacompany">Visa Company</label>
+            <input type="text" class="visacompany" required>
+        `;
+        passengers.appendChild(passengerGroup);
+    }
+
+    // Function to add flight fields
+    function addFlight() {
+        const flights = document.getElementById('flights');
+        const flightGroup = document.createElement('div');
+        flightGroup.classList.add('form-group', 'flight-group');
+        flightGroup.innerHTML = `
+            <label for="cityFrom">City From:</label>
+            <input type="text" class="cityFrom" required>
+            <label for="cityTo">City To:</label>
+            <input type="text" class="cityTo" required>
+            <label for="flightDate">Flight Date:</label>
+            <input type="date" class="flightDate" required>
+            <label for="etd">ETD:</label>
+            <input type="time" class="etd" required>
+            <label for="eta">ETA:</label>
+            <input type="time" class="eta" required>
+            <label for="carrier">Carrier:</label>
+            <input type="text" class="carrier" required>
+            <label for="flightNo">Flight No.:</label>
+            <input type="text" class="flightNo" required>
+        `;
+        flights.appendChild(flightGroup);
+    }
+
+    // Function to add hotel fields
+    function addHotel() {
+        const hotels = document.getElementById('hotels');
+        const hotelGroup = document.createElement('div');
+        hotelGroup.classList.add('form-group', 'hotel-group');
+        hotelGroup.innerHTML = `
+            <label for="hotelCity">Hotel City:</label>
+            <input type="text" class="hotelCity" required>
+            <label for="hotelName">Hotel Name:</label>
+            <input type="text" class="hotelName" required>
+            <label for="checkInDate">Check-In Date:</label>
+            <input type="date" class="checkInDate" required>
+            <label for="checkOutDate">Check-Out Date:</label>
+            <input type="date" class="checkOutDate" required>
+            <label for="roomType">Room Type:</label>
+            <input type="text" class="roomType" required>
+            <label for="checkInTime">Check-In Time:</label>
+            <input type="time" class="checkInTime" required>
+            <label for="nights">No. of Nights:</label>
+            <input type="number" class="nights" required>
+        `;
+        hotels.appendChild(hotelGroup);
+    }
+
+    // Function to add contact fields
+    // function addContact() {
+    //     const contacts = document.getElementById('contacts');
+    //     const contactGroup = document.createElement('div');
+    //     contactGroup.classList.add('form-group', 'contact-group');
+    //     contactGroup.innerHTML = `
+    //         <label for="contactperson">Contact Person</label>
+    //         <input type="text" class="contactperson" required placeholder="Eg. Jeddah: +1234567890">
+    //     `;
+    //     contacts.appendChild(contactGroup);
+    // }
+
+    // Function to generate the voucher
+    function generateVoucher() {
+        // Sub Agent Info
+        const subAgent = document.getElementById('subAgent').value;
+        document.getElementById('subAgentDisplay').innerText = subAgent;
+
+        // Passenger Info
+        const passengerList = document.getElementById('passengerList');
+        passengerList.innerHTML = ''; // Clear previous passengers
+        const passengers = document.querySelectorAll('#passengers .passenger-group');
+        document.getElementById('totalPassengers').innerText = passengers.length;
+        passengers.forEach(passenger => {
+            const name = passenger.querySelector('.passengername').value;
+            const passportNo = passenger.querySelector('.passportnumber').value;
+            const groupNo = passenger.querySelector('.groupnumber').value;
+            const visaCompany = passenger.querySelector('.visacompany').value;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${passportNo}</td>
+                <td>${groupNo}</td>
+                <td>${visaCompany}</td>
+            `;
+            passengerList.appendChild(row);
+        });
+
+        // Flight Info
+        const flightList = document.getElementById('flightList');
+        flightList.innerHTML = ''; // Clear previous flights
+        const flights = document.querySelectorAll('#flights .flight-group');
+        flights.forEach(flight => {
+            const cityFrom = flight.querySelector('.cityFrom').value;
+            const cityTo = flight.querySelector('.cityTo').value;
+            const flightDate = flight.querySelector('.flightDate').value;
+            const etd = flight.querySelector('.etd').value;
+            const eta = flight.querySelector('.eta').value;
+            const carrier = flight.querySelector('.carrier').value;
+            const flightNo = flight.querySelector('.flightNo').value;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${cityFrom}</td>
+                <td>${cityTo}</td>
+                <td>${flightDate}</td>
+                <td>${etd}</td>
+                <td>${eta}</td>
+                <td>${carrier}</td>
+                <td>${flightNo}</td>
+            `;
+            flightList.appendChild(row);
+        });
+
+        // Hotel Info
+        const hotelList = document.getElementById('hotelList');
+        hotelList.innerHTML = ''; // Clear previous hotels
+        const hotels = document.querySelectorAll('#hotels .hotel-group');
+        hotels.forEach(hotel => {
+            const hotelCity = hotel.querySelector('.hotelCity').value;
+            const hotelName = hotel.querySelector('.hotelName').value;
+            const checkInDate = hotel.querySelector('.checkInDate').value;
+            const checkOutDate = hotel.querySelector('.checkOutDate').value;
+            const roomType = hotel.querySelector('.roomType').value;
+            const checkInTime = hotel.querySelector('.checkInTime').value;
+            const nights = hotel.querySelector('.nights').value;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${hotelCity}</td>
+                <td>${hotelName}</td>
+                <td>${checkInDate}</td>
+                <td>${checkOutDate}</td>
+                <td>${roomType}</td>
+                <td>${checkInTime}</td>
+                <td>${nights}</td>
+            `;
+            hotelList.appendChild(row);
+        });
+
+        // Contact Info
+        // const contactList = document.getElementById('contactList');
+        // contactList.innerHTML = ''; // Clear previous contacts
+        // const contacts = document.querySelectorAll('#contacts .contact-group');
+        // contacts.forEach(contact => {
+        //     const contactPerson = contact.querySelector('.contactperson').value;
+        //     const div = document.createElement('div');
+        //     div.innerHTML = `
+        //         <p>${contactPerson}</p>
+        //     `;
+        //     contactList.appendChild(div);
+        // });
+
+        // Show the voucher section
+        document.querySelector('.voucher').style.display = 'block';
+        const qrCodeData = {
+                passengers: [...document.querySelectorAll('.passenger-group')].map(group => ({
+                    name: group.querySelector('.passengername').value,
+                    passport: group.querySelector('.passportnumber').value,
+                    group: group.querySelector('.groupnumber').value,
+                    visaCompany: group.querySelector('.visacompany').value,
+                })),
+                flights: [...document.querySelectorAll('.flight-group')].map(group => ({
+                    from: group.querySelector('.cityFrom').value,
+                    to: group.querySelector('.cityTo').value,
+                    date: group.querySelector('.flightDate').value,
+                    etd: group.querySelector('.etd').value,
+                    eta: group.querySelector('.eta').value,
+                    carrier: group.querySelector('.carrier').value,
+                    flightNo: group.querySelector('.flightNo').value,
+                })),
+                hotels: [...document.querySelectorAll('.hotel-group')].map(group => ({
+                    city: group.querySelector('.hotelCity').value,
+                    hotel: group.querySelector('.hotelName').value,
+                    checkInDate: group.querySelector('.checkInDate').value,
+                    checkOutDate: group.querySelector('.checkOutDate').value,
+                    roomType: group.querySelector('.roomType').value,
+                    checkInTime: group.querySelector('.checkInTime').value,
+                    nights: group.querySelector('.nights').value,
+                })),
+                contacts: [...document.querySelectorAll('.contact-group')].map(group => ({
+                    contactPerson: group.querySelector('.contactperson').value,
+                })),
+                subAgent: document.getElementById('subAgent').value,
+            };
+            const canvas = document.getElementById('qrcode');
+            if (canvas) {
+                QRCode.toCanvas(canvas, JSON.stringify(qrCodeData), function (error) {
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        console.log('QR Code generated successfully!');
+                    }
+                });
+            } else {
+                console.error('Canvas element not found');
+            }
+        
+
+            // Show the voucher
+            document.querySelector('.voucher').style.display = 'block';
+        }
+
+        function downloadVoucher() {
+            html2canvas(document.querySelector('.voucher')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'voucher.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    // Function to download the voucher as a PDF
+    // function downloadVoucher() {
+    //     // Use a library like jsPDF to generate the PDF from the voucher content
+    //     const voucherContent = document.querySelector('.voucher').innerHTML;
+    //     const doc = new jsPDF();
+    //     doc.fromHTML(voucherContent, 15, 15, {
+    //         'width': 170,
+    //     });
+    //     doc.save('UmrahVoucher.pdf');
+    // }
+</script>
+
+</body>
+</html>
