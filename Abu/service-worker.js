@@ -4,7 +4,11 @@ const urlsToCache = [
     '/index.html',
     '/styles.css',
     '/script.js',
-    '/image.jpg'
+    '/Black_and_Blue_Airplane_Travel_Logo-removebg-preview (1).png',
+    'Black_and_Blue_Airplane_Travel_Logo-removebg-preview (2).png',
+    'Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png',
+    'Black_and_Blue_Airplane_Travel_Logo-removebg-preview.png',
+    '3dgifmaker95690.gif'
 ];
 
 // Install the service worker and cache resources
