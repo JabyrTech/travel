@@ -2,8 +2,6 @@ const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/styles.css',
-    '/script.js',
     '/Black_and_Blue_Airplane_Travel_Logo-removebg-preview (1).png',
     'Black_and_Blue_Airplane_Travel_Logo-removebg-preview (2).png',
     'Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png',
