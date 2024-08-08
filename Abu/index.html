@@ -3,10 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png"
+      type="image/x-icon"
+    />
     <title>Voucher</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      // Initialize jsPDF
+      window.jsPDF = window.jspdf.jsPDF;
+    </script>
 
     <style>
       body {
@@ -69,17 +78,22 @@
 
       header {
         width: 100%;
-        /* height: 100px; */
-        /* background-image: url('kaabah2.jpg'); */
-        background-size: contain;
-        background-position: right;
+        height: 400px;
+        background-image: url("kaabah2.jpg");
+        background-size: cover;
+        /* background-position: center; */
         background-repeat: no-repeat;
+        display: block !important;
       }
 
       .cover {
         /* width: 100%; */
         height: 100%;
-        /* background: linear-gradient(90deg, rgb(106, 83, 68) 50%, rgba(0, 0, 0, 0)); */
+        background: linear-gradient(
+          0deg,
+          rgb(106, 83, 68),
+          rgba(0, 0, 0, 0.603)
+        );
       }
 
       .title {
@@ -92,10 +106,31 @@
         align-content: center;
         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
         text-shadow: 1px 1px rgba(128, 128, 128, 0.555);
+        background-color: transparent;
+        padding: 5% 0;
+        flex-wrap: wrap;
       }
 
       .title img {
-        width: 30%;
+        width: 10%;
+        /* margin-right: 5%; */
+      }
+
+      .company {
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .company img {
+        width: 200px;
+      }
+
+      .company h1 {
+        color: White !important;
+        margin-top: 0 !important;
       }
 
       h1,
@@ -108,7 +143,7 @@
       }
 
       .in {
-        padding: 10px 70px;
+        padding: 50px 100px 0 100px;
       }
 
       .personalinfo {
@@ -147,7 +182,7 @@
       th,
       td {
         margin: 0;
-        padding: 10px;
+        padding: 20px 10px;
         max-width: 100px;
       }
 
@@ -155,14 +190,14 @@
         font-size: small;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         line-height: 0.5;
         flex-wrap: wrap;
       }
 
       .contact h2 {
         width: 100%;
-        text-align: center;
+        text-align: left;
         font-size: small;
         margin-top: 40px;
       }
@@ -187,6 +222,9 @@
         display: flex;
         align-items: end;
         justify-content: flex-start;
+        height: 400px;
+        width: 100%;
+        /* background-image: ; */
       }
 
       .cover img:first-child {
@@ -285,20 +323,26 @@
       }
 
       .divider img {
-        width: 150px;
+        width: 200px;
+        height: 50px;
       }
 
       #qrcode {
-        width: 100px !important;
-        height: 100px !important;
+        width: 80px !important;
+        height: 80px !important;
+      }
+
+      .qrcode img {
+        width: 100% !important;
+        padding: 0;
+        margin: 0;
       }
 
       .qrcode {
-        width: 80%;
-        padding: 10%;
+        width: 20%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
       }
 
       #loader {
@@ -311,15 +355,43 @@
         justify-content: center;
       }
 
-      #loader img{
+      #loader img {
         width: 200px;
+      }
+
+      .partners {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background: transparent;
+      }
+
+      .info h2 {
+        font-size: x-large;
+      }
+
+      .remove-button {
+        color: red;
+        text-transform: lowercase;
+        cursor: pointer;
+      }
+
+      .form-group h3 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      #transports,
+      #bomb, #bombing {
+        display: none;
       }
     </style>
   </head>
   <body>
-
     <div id="loader">
-        <img src="3dgifmaker95690.gif" alt="">
+      <img src="3dgifmaker95690.gif" alt="" />
     </div>
 
     <section class="head">
@@ -338,7 +410,9 @@
       <form id="voucherForm">
         <div>
           <div class="form-group">
-            <h2>Sub Agent</h2>
+            <h2>Company Info</h2>
+            <label for="subcompany">Company:</label>
+            <input type="text" id="subcompany" required />
             <label for="subAgent">Sub Agent:</label>
             <input type="text" id="subAgent" required />
           </div>
@@ -401,14 +475,39 @@
             <input type="date" class="checkOutDate" required />
             <label for="roomType">Room Type:</label>
             <input type="text" class="roomType" required />
-            <label for="checkInTime">Check-In Time:</label>
-            <input type="time" class="checkInTime" required />
+            <!-- <label for="checkInTime">Check-In Time:</label>
+            <input type="time" class="checkInTime" required /> -->
             <label for="nights">No. of Nights:</label>
-            <input type="number" class="nights" required />
+            <input type="number" class="nights" required value="4" />
           </div>
         </div>
         <div class="form-group">
           <button type="button" onclick="addHotel()">Add Another Hotel</button>
+        </div>
+
+        <div class="form-group" style="flex-direction: row;">
+          <input type="checkbox" id="bomber" style="width: 2%" onclick="toggleTransportInfo()" />Transportation
+        </div>
+
+        <div id="transports">
+          <h2>Transport Information</h2>
+          <div class="form-group transport-group">
+            <label for="transdate">Date:</label>
+            <input type="date" class="transdate" required />
+            <label for="transfrom">From</label>
+            <input type="text" class="transfrom" required />
+            <label for="transto">To</label>
+            <input type="text" class="transto" required />
+            <label for="transtime">Time</label>
+            <input type="text" class="transtime" required />
+            <label for="tt">Bus/Hiace/SUV</label>
+            <input type="text" class="tt" required />
+          </div>
+        </div>
+        <div class="form-group" id="bomb">
+          <button type="button" onclick="addtransport()">
+            Add Another Transport
+          </button>
         </div>
 
         <!-- <div id="contacts">
@@ -430,19 +529,36 @@
       </form>
     </div>
 
-    <div class="voucher" style="">
+    <div class="voucher" style="display: block" id="voucherr">
       <header>
         <div class="cover">
           <div class="title">
-            <img
-              src="Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png"
-              alt=""
-            />
-            <h1>ABUKHALID TRAVELLLING AGENCY</h1>
+            <div class="company">
+              <img
+                src="Black_and_Blue_Airplane_Travel_Logo-removebg-preview (3).png"
+                alt=""
+              />
+              <h1>ABUKHALID TRAVELLLING AGENCY</h1>
+            </div>
+            <div class="partners">
+              <img
+                src="WhatsApp_Image_2024-07-23_at_12.08.29_PM-removebg-preview.png"
+                alt=""
+              />
+              <img
+                src="WhatsApp_Image_2024-07-23_at_12.08.28_PM-removebg-preview.png"
+                alt=""
+              />
+              <!-- <img src="iata.png" alt=""> -->
+            </div>
           </div>
         </div>
       </header>
       <div class="in">
+        <h1
+          style="width: 100%; text-align: center; color: #863a6f"
+          id="sub-company"
+        ></h1>
         <div class="personalinfo">
           <div class="info">
             <h2>Umrah Voucher</h2>
@@ -455,7 +571,7 @@
           <h2 id="year"></h2>
         </div>
         <div class="divider">
-          <img src="divider.webp" alt="" />
+          <img src="divider.png" alt="" />
         </div>
         <div class="tripinfo">
           <div class="flightinfo">
@@ -506,33 +622,58 @@
                   <th>NO. OF NIGHT</th>
                 </tr>
               </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>IN</td>
+                  <td>OUT</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
               <tbody id="hotelList">
+                <!-- add hotel info here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="transport" id="bombing">
+            <h2>TRANSPORT INFORMATION</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Time</th>
+                  <th>Bus/Hiace/Suv</th>
+                </tr>
+              </thead>
+              <tbody id="transportlist">
                 <!-- add hotel info here -->
               </tbody>
             </table>
           </div>
         </div>
         <div class="divider">
-          <img src="divider.webp" alt="" />
+          <img src="divider.png" alt="" />
         </div>
         <div class="contact">
-          <h2>CONTACT PERSONS</h2>
           <div class="contactpersons" id="contactList">
+            <h2>CONTACT PERSONS</h2>
             <p>JEDDAH: +966508229687, +966592221175, +966566092788</p>
             <p>MADINA: +966540208267, +966561760381</p>
             <p>MAKKAH +966592020885, +966540216152, +966547663844</p>
           </div>
-        </div>
 
-        <div class="qrcode">
-          <!-- <h2>Scan to View Voucher</h2> -->
-          <canvas id="qrcode" height="100px" width="100px"></canvas>
+          <div class="qrcode">
+            <!-- <h2>Scan to View Voucher</h2> -->
+            <!-- <canvas id="qrcode" height="100px" width="100px"></canvas>
+             -->
+            <img src="Abukhalid voucher check.png" alt="" />
+          </div>
         </div>
-      </div>
-
-      <div class="cover3">
-        <img src="WhatsApp Image 2024-07-23 at 12.08.28 PM.jpeg" alt="" />
-        <img src="WhatsApp Image 2024-07-23 at 12.08.29 PM.jpeg" alt="" />
       </div>
     </div>
 
@@ -541,6 +682,9 @@
         Download Voucher
       </button>
     </div>
+    <!-- 
+    <div id="voucherContainer"></div>
+    <button onclick="loadVouchers()">Load Saved Vouchers</button> -->
 
     <script>
       var d = new Date().getFullYear();
@@ -553,7 +697,8 @@
         const passengerGroup = document.createElement("div");
         passengerGroup.classList.add("form-group", "passenger-group");
         passengerGroup.innerHTML = `
-            <label for="passengername">Name</label>
+        <h3><span>Add Passenger</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <label for="passengername">Full Name</label>
             <input type="text" class="passengername" required>
             <label for="passportnumber">Passport Number</label>
             <input type="text" class="passportnumber" required>
@@ -571,6 +716,7 @@
         const flightGroup = document.createElement("div");
         flightGroup.classList.add("form-group", "flight-group");
         flightGroup.innerHTML = `
+        <h3><span>Add Flight</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
             <label for="cityFrom">City From:</label>
             <input type="text" class="cityFrom" required>
             <label for="cityTo">City To:</label>
@@ -595,6 +741,7 @@
         const hotelGroup = document.createElement("div");
         hotelGroup.classList.add("form-group", "hotel-group");
         hotelGroup.innerHTML = `
+        <h3><span>Add Hotel</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
             <label for="hotelCity">Hotel City:</label>
             <input type="text" class="hotelCity" required>
             <label for="hotelName">Hotel Name:</label>
@@ -605,12 +752,30 @@
             <input type="date" class="checkOutDate" required>
             <label for="roomType">Room Type:</label>
             <input type="text" class="roomType" required>
-            <label for="checkInTime">Check-In Time:</label>
-            <input type="time" class="checkInTime" required>
             <label for="nights">No. of Nights:</label>
-            <input type="number" class="nights" required>
+            <input type="number" class="nights" required value="10">
         `;
         hotels.appendChild(hotelGroup);
+      }
+
+      function addtransport() {
+        const transport = document.getElementById("transport");
+        const transportGroup = document.createElement("div");
+        transportGroup.classList.add("form-group", "transport-group");
+        transportGroup.innerHTML = `
+        <h3><span>Add Transportation</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <label for="transdate">Date:</label>
+            <input type="date" class="transdate" required>
+            <label for="transfrom">From</label>
+            <input type="text" class="transfrom" required>
+            <label for="transto">To</label>
+            <input type="text" class="transto" required>
+            <label for="transtime">Time</label>
+            <input type="text" class="transtime" required>
+            <label for="tt">Bus/Hiace/SUV</label>
+            <input type="text" class="tt" required>
+        `;
+        transport.appendChild(passengerGroup);
       }
 
       // Function to add contact fields
@@ -625,8 +790,35 @@
       //     contacts.appendChild(contactGroup);
       // }
 
+      // Function to remove a section
+      function removeSection(button) {
+        const section = button.closest(".form-group");
+        section.remove();
+      }
+
+      // Function to toggle visibility based on checkbox state
+      function toggleTransportInfo() {
+        var checkbox = document.getElementById("bomber");
+        var transports = document.getElementById("transports");
+        var bomb = document.getElementById("bomb");
+        var bombing = document.getElementById("bombing");
+
+        // Toggle display based on checkbox state
+        if (checkbox.checked) {
+          transports.style.display = "block";
+          bomb.style.display = "block";
+          bombing.style.display = "block";
+        } else {
+          transports.style.display = "none";
+          bomb.style.display = "none";
+          bombing.style.display = "none";
+        }
+      }
+
       // Function to generate the voucher
       function generateVoucher() {
+        const subcompany = document.getElementById("subcompany").value;
+        document.getElementById("sub-company").innerText = subcompany;
         // Sub Agent Info
         const subAgent = document.getElementById("subAgent").value;
         document.getElementById("subAgentDisplay").innerText = subAgent;
@@ -689,7 +881,8 @@
           const checkInDate = hotel.querySelector(".checkInDate").value;
           const checkOutDate = hotel.querySelector(".checkOutDate").value;
           const roomType = hotel.querySelector(".roomType").value;
-          const checkInTime = hotel.querySelector(".checkInTime").value;
+          // const checkInTime = hotel.querySelector(".checkInTime").value;
+          const checkInTime = "02:00 PM";
           const nights = hotel.querySelector(".nights").value;
           const row = document.createElement("tr");
           row.innerHTML = `
@@ -702,6 +895,28 @@
                 <td>${nights}</td>
             `;
           hotelList.appendChild(row);
+        });
+
+        const transportlist = document.getElementById("transportlist");
+        transportlist.innerHTML = ""; // Clear previous flights
+        const transports = document.querySelectorAll(
+          "#transports .transport-group"
+        );
+        transports.forEach((tp) => {
+          const cityFrom = tp.querySelector(".transdate").value;
+          const cityTo = tp.querySelector(".transfrom").value;
+          const flightDate = tp.querySelector(".transto").value;
+          const etd = tp.querySelector(".transtime").value;
+          const eta = tp.querySelector(".tt").value;
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>${cityFrom}</td>
+                <td>${cityTo}</td>
+                <td>${flightDate}</td>
+                <td>${etd}</td>
+                <td>${eta}</td>
+            `;
+          transportlist.appendChild(row);
         });
 
         // Contact Info
@@ -747,6 +962,7 @@
               checkOutDate: group.querySelector(".checkOutDate").value,
               roomType: group.querySelector(".roomType").value,
               checkInTime: group.querySelector(".checkInTime").value,
+              // checkInTime: '14:00pm',
               nights: group.querySelector(".nights").value,
             })
           ),
@@ -774,23 +990,84 @@
         document.querySelector(".voucher").style.display = "block";
       }
 
+      // function downloadVoucher() {
+      //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
+      //     const link = document.createElement("a");
+      //     link.download = "voucher.png";
+      //     link.href = canvas.toDataURL("image/png");
+      //     link.click();
+      //   });
+      // }
+
       function downloadVoucher() {
+        // Retrieve the first passenger's name
+        const passengerNameInput = document.querySelector(".passengername");
+        let passengerName = passengerNameInput
+          ? passengerNameInput.value.trim()
+          : "Voucher";
+
+        // Sanitize the filename by replacing any illegal characters
+        passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+
+        // Use html2canvas to capture the voucher as an image
         html2canvas(document.querySelector(".voucher")).then((canvas) => {
           const link = document.createElement("a");
-          link.download = "voucher.png";
+
+          // Set the download filename to include the passenger's name
+          link.download = `${passengerName}_Voucher.png`;
           link.href = canvas.toDataURL("image/png");
+
+          // Trigger the download
           link.click();
         });
       }
+
+      //  function downloadVoucher() {
+      //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
+      //     // Convert canvas to base64 image
+      //     const imageData = canvas.toDataURL("image/png");
+
+      //     // Send image data to the server
+      //     fetch("/save-voucher", {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify({ image: imageData }),
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         if (data.success) {
+      //           alert("Voucher saved successfully!");
+      //           // Download the image
+      //           const link = document.createElement("a");
+      //           link.download = "voucher.png";
+      //           link.href = imageData;
+      //           link.click();
+      //         } else {
+      //           alert("Failed to save voucher.");
+      //         }
+      //       })
+      //       .catch((error) => console.error("Error:", error));
+      //   });
+      // }
+
       // Function to download the voucher as a PDF
-      // function downloadVoucher() {
-      //     // Use a library like jsPDF to generate the PDF from the voucher content
-      //     const voucherContent = document.querySelector('.voucher').innerHTML;
-      //     const doc = new jsPDF();
-      //     doc.fromHTML(voucherContent, 15, 15, {
-      //         'width': 170,
-      //     });
-      //     doc.save('UmrahVoucher.pdf');
+      //   async function downloadVoucher() {
+      //   // Ensure jsPDF is correctly initialized
+      //   const { jsPDF } = window.jspdf;
+      //   const doc = new jsPDF();
+
+      //   // Select the content to be included in the PDF
+      //   const voucherContent = document.querySelector('.voucher');
+
+      //   // Use the `html` method to render HTML content
+      //   await doc.html(voucherContent, {
+      //     callback: function (doc) {
+      //       doc.save('UmrahVoucher.pdf');
+      //     },
+      //     width: 1000 // Max width of content
+      //   });
       // }
 
       // Show the loader initially
@@ -802,16 +1079,35 @@
         document.getElementById("content").style.display = "block";
       });
 
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("service-worker.js")
+          .then(function (registration) {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch(function (error) {
+            console.log("Service Worker registration failed:", error);
+          });
+      }
 
-
-      if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                }).catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-        }
+      function loadVouchers() {
+        fetch("/get-vouchers")
+          .then((response) => response.json())
+          .then((vouchers) => {
+            const voucherContainer =
+              document.getElementById("voucherContainer");
+            voucherContainer.innerHTML = ""; // Clear previous content
+            vouchers.forEach((voucher) => {
+              const img = document.createElement("img");
+              img.src = voucher.image;
+              voucherContainer.appendChild(img);
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     </script>
   </body>
 </html>
