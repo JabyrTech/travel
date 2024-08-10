@@ -74,6 +74,7 @@
         max-width: 900px;
         box-shadow: 2px 2px 20px rgba(128, 128, 128, 0.363);
         display: none;
+        height: fit-content;
       }
 
       header {
@@ -332,10 +333,8 @@
         height: 80px !important;
       }
 
-      .qrcode img {
-        width: 100% !important;
-        padding: 0;
-        margin: 0;
+      #qrcode img {
+        width: 80px !important;
       }
 
       .qrcode {
@@ -384,7 +383,8 @@
       }
 
       #transports,
-      #bomb, #bombing {
+      #bomb,
+      #bombing {
         display: none;
       }
     </style>
@@ -485,8 +485,13 @@
           <button type="button" onclick="addHotel()">Add Another Hotel</button>
         </div>
 
-        <div class="form-group" style="flex-direction: row;">
-          <input type="checkbox" id="bomber" style="width: 2%" onclick="toggleTransportInfo()" />Transportation
+        <div class="form-group" style="flex-direction: row">
+          <input
+            type="checkbox"
+            id="bomber"
+            style="width: 2%"
+            onclick="toggleTransportInfo()"
+          />Transportation
         </div>
 
         <div id="transports">
@@ -523,13 +528,36 @@
 
         <div class="form-group">
           <button type="button" onclick="generateVoucher()">
-            Generate Voucher
+            Generate Voucher For QR Code
+          </button>
+        </div>
+
+        <div class="form-group">
+          <button type="button" onclick="downloadVoucher()">
+            Download Voucher For QR Code
+          </button>
+        </div>
+
+        <div class="form-group" href="https://me-qr.com/qr-code-generator/qr">
+          <button type="button">
+            <a href="https://me-qr.com/qr-code-generator/qr" target="_blank" style="color: white; font-weight: bold; text-decoration: none; "> Create QR</a>
+          </button>
+        </div>
+
+        <div class="form-group image" style="width: 100%; display: flex; align-items: center; justify-content: center;">
+          <label for="qrimage">Upload QR</label>
+          <input type="file" id="imageInput" accept="image/*" style="width: 20%;"/>
+        </div>
+
+        <div class="form-group">
+          <button type="button" onclick="generateVoucher()">
+            Generate Complete Voucher With QR Code
           </button>
         </div>
       </form>
     </div>
 
-    <div class="voucher" style="display: none" id="voucherr">
+    <div class="voucher" style="display: block" id="voucherr">
       <header>
         <div class="cover">
           <div class="title">
@@ -667,17 +695,12 @@
             <p>MAKKAH +966592020885, +966540216152, +966547663844</p>
           </div>
 
-          <div class="qrcode">
-            <!-- <h2>Scan to View Voucher</h2> -->
-            <!-- <canvas id="qrcode" height="100px" width="100px"></canvas>
-             -->
-            <img src="Abukhalid voucher check.png" alt="" />
-          </div>
+          <div id="qrcode"></div>
         </div>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px;">
       <button type="button" onclick="downloadVoucher()">
         Download Voucher
       </button>
@@ -988,7 +1011,25 @@
 
         // Show the voucher
         document.querySelector(".voucher").style.display = "block";
+
+        // Function to display the selected image in the qrcode div
       }
+
+      document.getElementById("imageInput").addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.alt = "QR Code";
+                img.style.maxWidth = "150px";
+                document.getElementById("qrcode").innerHTML = "";
+                document.getElementById("qrcode").appendChild(img);
+              };
+              reader.readAsDataURL(file);
+            }
+          });
 
       // function downloadVoucher() {
       //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
