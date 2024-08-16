@@ -1040,9 +1040,10 @@
       //   });
       // }
 
+      
       function downloadVoucher() {
         // Retrieve the first passenger's name
-        const passengerNameInput = document.querySelector(".passengername");
+        const passengerNameInput = document.querySelector("#subAgent");
         let passengerName = passengerNameInput
           ? passengerNameInput.value.trim()
           : "Voucher";
@@ -1052,14 +1053,19 @@
 
         // Use html2canvas to capture the voucher as an image
         html2canvas(document.querySelector(".voucher")).then((canvas) => {
-          const link = document.createElement("a");
+          const imgData = canvas.toDataURL("image/png");
+
+          // Create a new jsPDF instance
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF();
+
+          // Add the image to the PDF
+          const imgWidth = 190; // Scale the width to fit within the PDF
+          const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+          pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
 
           // Set the download filename to include the passenger's name
-          link.download = `${passengerName}_Voucher.png`;
-          link.href = canvas.toDataURL("image/png");
-
-          // Trigger the download
-          link.click();
+          pdf.save(`${passengerName}_Voucher.pdf`);
         });
       }
 
