@@ -1090,22 +1090,29 @@
         passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
 
         // Use html2canvas to capture the voucher as an image
-        html2canvas(document.querySelector(".voucher")).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-
-          // Create a new jsPDF instance
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF();
-
-          // Add the image to the PDF
-          const imgWidth = 190; // Scale the width to fit within the PDF
-          const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-          pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-
-          // Set the download filename to include the passenger's name
-          pdf.save(`${passengerName}_Voucher.pdf`);
+        html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+      
+        // Create a new jsPDF instance with higher DPI
+        const pdf = new jsPDF({
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait',
+          compress: true,
+          precision: 16
         });
-      }
+      
+        // Add the image to the PDF
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      
+        // Set the download filename to include the passenger's name
+        pdf.save(`${passengerName}_Voucher.pdf`);
+      });
+
+
+      
 
       //  function downloadVoucher() {
       //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
