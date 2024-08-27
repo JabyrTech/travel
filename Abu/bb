@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #4a90e2, #50e3c2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    color: #fff;
+}
+
+.message-box {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.message {
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.amount {
+    font-weight: bold;
+    color: #ffeb3b;
+}
+
+@media (max-width: 600px) {
+    .title {
+        font-size: 2em;
+    }
+    
+    .message {
+        font-size: 1em;
+    }
+}
+
+</head>
+<body>
+    <div class="container">
+        <div class="message-box">
+            <h1 class="title">Congratulations!</h1>
+            <p class="message">Your payment of <span class="amount">$1.22</span> has been received and your account will be active in a few hours. Thanks!</p>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const title = document.querySelector('.title');
+    const message = document.querySelector('.message');
+
+    function animateTitle() {
+        title.style.opacity = 0;
+        title.style.transform = 'translateY(-50px)';
+        setTimeout(() => {
+            title.style.transition = 'opacity 1s ease, transform 1s ease';
+            title.style.opacity = 1;
+            title.style.transform = 'translateY(0)';
+        }, 100);
+    }
+
+    function animateMessage() {
+        message.style.opacity = 0;
+        message.style.transform = 'translateY(50px)';
+        setTimeout(() => {
+            message.style.transition = 'opacity 1s ease, transform 1s ease';
+            message.style.opacity = 1;
+            message.style.transform = 'translateY(0)';
+        }, 300);
+    }
+
+    animateTitle();
+    animateMessage();
+});
+
+    </script>
+</body>
+</html>
