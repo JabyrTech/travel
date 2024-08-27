@@ -412,8 +412,10 @@
         <div>
           <div class="form-group">
             <h2>Company Info</h2>
-            <label for="subcompany">Company:</label>
+            <label for="subcompany">Top Company:</label>
             <input type="text" id="subcompany" required />
+            <label for="subcompanydown">Sub Company:</label>
+            <input type="text" id="subcompanydown" />
             <label for="subAgent">Sub Agent:</label>
             <input type="text" id="subAgent" required />
           </div>
@@ -619,6 +621,9 @@
         </div>
       </header>
       <div class="in">
+        <h1
+          style="width: 100%; text-align: center; color: #863a6f" id="sub-companydown"
+        ></h1>
         <div class="personalinfo">
           <div class="info">
             <h2>Umrah Voucher</h2>
@@ -874,6 +879,10 @@
       function generateVoucher() {
         const subcompany = document.getElementById("subcompany").value;
         document.getElementById("sub-company").innerText = subcompany;
+
+        const subcompanydown = document.getElementById("subcompanydown").value;
+        document.getElementById("sub-companydown").innerText = subcompanydown;
+
         // Sub Agent Info
         const subAgent = document.getElementById("subAgent").value;
         document.getElementById("subAgentDisplay").innerText = subAgent;
