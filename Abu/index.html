@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <heaad>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -1075,40 +1075,85 @@
       //   });
       // }
 
-      
       function downloadVoucher() {
-        // Retrieve the first passenger's name
-        const passengerNameInput = document.querySelector("#subAgent");
-        let passengerName = passengerNameInput
-          ? passengerNameInput.value.trim()
-          : "Voucher";
+    // Retrieve the first passenger's name
+    const passengerNameInput = document.querySelector("#subAgent");
+    let passengerName = passengerNameInput
+      ? passengerNameInput.value.trim()
+      : "Voucher";
 
-        // Sanitize the filename by replacing any illegal characters
-        passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+    // Sanitize the filename by replacing any illegal characters
+    passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
 
-        // Use html2canvas to capture the voucher as an image
-        html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-      
-        // Create a new jsPDF instance with higher DPI
-        const pdf = new jsPDF({
-          unit: 'mm',
-          format: 'a4',
-          orientation: 'portrait',
-          compress: true,
-          precision: 16
-        });
-      
-        // Add the image to the PDF
-        const imgWidth = 190;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      
-        // Set the download filename to include the passenger's name
-        pdf.save(`${passengerName}_Voucher.pdf`);
+    // Use html2canvas to capture the voucher as an image
+    html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+    
+      // Create a new jsPDF instance with higher DPI
+      const pdf = new jsPDF({
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait',
+        compress: true,
+        precision: 16
       });
-
+    
+      // Define the A4 paper dimensions (210mm x 297mm)
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+    
+      // Calculate the image dimensions
+      const imgWidth = pdfWidth - 20; // Adding margin of 10mm on each side
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+      // Add the image to the PDF
+      if (imgHeight > pdfHeight - 20) { // If image height exceeds PDF height, scale it down
+        const scaleFactor = (pdfHeight - 20) / imgHeight;
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth * scaleFactor, imgHeight * scaleFactor);
+      } else {
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
       }
+    
+      // Set the download filename to include the passenger's name
+      pdf.save(`${passengerName}_Voucher.pdf`);
+    });
+}
+
+
+      
+      //function downloadVoucher() {
+        // Retrieve the first passenger's name
+      //  const passengerNameInput = document.querySelector("#subAgent");
+       // let passengerName = passengerNameInput
+      //    ? passengerNameInput.value.trim()
+      //    : "Voucher";
+
+       // // Sanitize the filename by replacing any illegal characters
+      //  passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+
+    //    // Use html2canvas to capture the voucher as an image
+     //   html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
+    //    const imgData = canvas.toDataURL("image/png");
+      
+   //     // Create a new jsPDF instance with higher DPI
+     //   const pdf = new jsPDF({
+      //    unit: 'mm',
+      //    format: 'a4',
+   //       orientation: 'portrait',
+      //    compress: true,
+     //     precision: 16
+    //    });
+      
+    //    // Add the image to the PDF
+     //   const imgWidth = 190;
+      //  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+     //   pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      
+      //  // Set the download filename to include the passenger's name
+      //  pdf.save(`${passengerName}_Voucher.pdf`);
+   //   });
+
+     // }
 
       
 
