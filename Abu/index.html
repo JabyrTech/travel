@@ -353,6 +353,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        display: none;
       }
 
       #loader img {
@@ -388,6 +389,135 @@
       #bombing {
         display: none;
       }
+
+      #savedVouchers {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .voucher-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin: 20px;
+        }
+
+        .voucher-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .voucher-card img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .voucher-info {
+            padding: 15px;
+        }
+
+        .voucher-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .voucher-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        #searchBar {
+            width: 90%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff1a1a;
+        }
+
+        #savedVouchersContainer {
+            margin-top: 20px;
+            padding: 20px;
+            /* background-color: #f0f0f0; */
+            border-radius: 8px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #savedVouchersContainer h2 {
+            margin-bottom: 15px;
+        }
     </style>
   </head>
   <body>
@@ -565,35 +695,17 @@
             <div class="form-group">
                 <button type="button" onclick="addContact()">Add Another Contact</button>
             </div> -->
-
-        <div class="form-group">
-          <button type="button" onclick="generateVoucher()">
-            Generate Voucher For QR Code
-          </button>
-        </div>
-
-        <div class="form-group">
-          <button type="button" onclick="downloadVoucher()">
-            Download Voucher For QR Code
-          </button>
-        </div>
-
-        <div class="form-group" href="https://me-qr.com/qr-code-generator/qr">
-          <button type="button">
-            <a href="https://me-qr.com/qr-code-generator/qr" target="_blank" style="color: white; font-weight: bold; text-decoration: none; "> Create QR</a>
-          </button>
-        </div>
-
-        <div class="form-group image" style="width: 100%; display: flex; align-items: center; justify-content: center;">
-          <label for="qrimage">Upload QR</label>
-          <input type="file" id="imageInput" accept="image/*" style="width: 20%;"/>
-        </div>
-
-        <div class="form-group">
-          <button type="button" onclick="generateVoucher()">
-            Generate Complete Voucher With QR Code
-          </button>
-        </div>
+            <div class="form-group">
+                <button type="button" onclick="generateVoucher()">
+                  Generate Voucher
+                </button>
+              </div>
+        
+              <div class="form-group">
+                <button type="button" onclick="downloadVoucher()">
+                  Download Voucher
+                </button>
+              </div>
       </form>
     </div>
 
@@ -737,11 +849,28 @@
       </div>
     </div>
 
+
+
     <div class="form-group" style="margin-top: 10px; margin-bottom: 50px">
-      <button type="button" onclick="downloadVoucher()">
-        Download Voucher
-      </button>
+        <button type="button" onclick="downloadVoucher()">
+          Download Voucher
+        </button>
+      </div>
+
+      <div id="savedVouchersContainer">
+        <h2>Saved Vouchers</h2>
+        <input type="text" id="searchBar" placeholder="Search by passenger name or subagent...">
+        <div id="savedVouchers"></div>
     </div>
+
+    <div id="voucherModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="Voucher">
+            <button id="deleteVoucher" class="delete-btn">Delete Voucher</button>
+        </div>
+    </div>
+
     <!-- 
     <div id="voucherContainer"></div>
     <button onclick="loadVouchers()">Load Saved Vouchers</button> -->
@@ -1082,50 +1211,151 @@
       // }
 
       function downloadVoucher() {
-    // Retrieve the first passenger's name
-    const passengerNameInput = document.querySelector("#subAgent");
-    let passengerName = passengerNameInput
-      ? passengerNameInput.value.trim()
-      : "Voucher";
+            const passengerNameInput = document.querySelector("#subAgent");
+            let passengerName = passengerNameInput
+                ? passengerNameInput.value.trim()
+                : "Voucher";
 
-    // Sanitize the filename by replacing any illegal characters
-    passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+            passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
 
-    // Use html2canvas to capture the voucher as an image
-    html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-    
-      // Create a new jsPDF instance with higher DPI
-      const pdf = new jsPDF({
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait',
-        compress: true,
-        precision: 16
-      });
-    
-      // Define the A4 paper dimensions (210mm x 297mm)
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-    
-      // Calculate the image dimensions
-      const imgWidth = pdfWidth - 20; // Adding margin of 10mm on each side
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-      // Add the image to the PDF
-      if (imgHeight > pdfHeight - 20) { // If image height exceeds PDF height, scale it down
-        const scaleFactor = (pdfHeight - 20) / imgHeight;
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth * scaleFactor, imgHeight * scaleFactor);
-      } else {
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      }
-    
-      // Set the download filename to include the passenger's name
-      pdf.save(`${passengerName}_Voucher.pdf`);
-    });
-}
+            // Set the voucher to be visible (but off-screen) for html2canvas
+            const voucher = document.querySelector(".voucher");
+            voucher.style.display = "block";
+            voucher.style.position = "absolute";
+            voucher.style.left = "-9999px";
+
+            html2canvas(voucher, {
+                scale: 2,
+                windowWidth: 210 * 3.78, // 210mm in pixels at 96 DPI
+                windowHeight: 297 * 3.78, // 297mm in pixels at 96 DPI (A4 height, will be adjusted)
+            }).then((canvas) => {
+                const imgData = canvas.toDataURL("image/png");
+            
+                const pdf = new jsPDF({
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                });
+            
+                const pdfWidth = 210; // A4 width in mm
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+                let currentPage = 0;
+                let heightLeft = pdfHeight;
+
+                while (heightLeft > 0) {
+                    if (currentPage > 0) {
+                        pdf.addPage();
+                    }
+                    const position = -currentPage * 297; // 297 is A4 height
+                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                    heightLeft -= 297;
+                    currentPage++;
+                }
+            
+                pdf.save(`${passengerName}_Voucher.pdf`);
+
+                // Save the image data to localStorage
+                saveVoucherImage(passengerName, imgData);
+
+                // Reset the voucher display
+                // voucher.style.display = "none";
+                voucher.style.position = "static";
+                voucher.style.left = "auto";
+            });
+        }
+
+        function displaySavedVouchers(searchTerm = '') {
+            const savedVouchersContainer = document.getElementById('savedVouchers');
+            savedVouchersContainer.innerHTML = '';
+
+            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
+
+            if (searchTerm) {
+                savedVouchers = savedVouchers.filter(voucher => 
+                    voucher.firstPassenger.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    voucher.subAgent.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            if (savedVouchers.length === 0) {
+                savedVouchersContainer.innerHTML = '<p class="no-results">No vouchers found.</p>';
+                return;
+            }
+
+            savedVouchers.forEach((voucher, index) => {
+                const voucherCard = document.createElement('div');
+                voucherCard.className = 'voucher-card';
+                voucherCard.innerHTML = `
+                    <img src="${voucher.imageData}" alt="Voucher for ${voucher.firstPassenger}">
+                    <div class="voucher-info">
+                        <h3>${voucher.firstPassenger}</h3>
+                        <p>Subagent: ${voucher.subAgent}</p>
+                        <p>Date: ${new Date(voucher.date).toLocaleDateString()}</p>
+                    </div>
+                `;
+                voucherCard.addEventListener('click', () => {
+                    openModal(voucher, index);
+                });
+                savedVouchersContainer.appendChild(voucherCard);
+            });
+        }
+
+        function saveVoucherImage(name, imageData) {
+            const subAgent = document.getElementById("subAgent").value;
+            const firstPassenger = document.querySelector(".passengername").value;
+            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
+            savedVouchers.push({ name, imageData, subAgent, firstPassenger, date: new Date().toISOString() });
+            localStorage.setItem('savedVouchers', JSON.stringify(savedVouchers));
+            displaySavedVouchers();
+        }
+
+        
 
 
+        function openModal(voucher, index) {
+            const modal = document.getElementById('voucherModal');
+            const modalImg = document.getElementById('modalImage');
+            const deleteBtn = document.getElementById('deleteVoucher');
+
+            modalImg.src = voucher.imageData;
+            modalImg.alt = `Voucher for ${voucher.firstPassenger}`;
+            modal.style.display = 'block';
+
+            deleteBtn.onclick = function() {
+                deleteVoucher(index);
+                modal.style.display = 'none';
+            };
+
+            const span = document.getElementsByClassName('close')[0];
+            span.onclick = function() {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        }
+
+        function deleteVoucher(index) {
+            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
+            savedVouchers.splice(index, 1);
+            localStorage.setItem('savedVouchers', JSON.stringify(savedVouchers));
+            displaySavedVouchers();
+        }
+
+        document.getElementById('searchBar').addEventListener('input', function(e) {
+            displaySavedVouchers(e.target.value);
+        });
+
+        // Initial display of saved vouchers
+        displaySavedVouchers();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            displaySavedVouchers();
+        });
       
       //function downloadVoucher() {
         // Retrieve the first passenger's name
@@ -1210,15 +1440,6 @@
       //     width: 1000 // Max width of content
       //   });
       // }
-
-      // Show the loader initially
-      document.getElementById("loader").style.display = "flex";
-
-      // Hide the loader and show the content once the window has fully loaded
-      window.addEventListener("load", function () {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("content").style.display = "block";
-      });
 
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
