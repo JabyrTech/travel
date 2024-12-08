@@ -1228,50 +1228,79 @@
       // }
 
       function downloadVoucher() {
-        const passengerNameInput = document.querySelector("#subAgent");
-        let passengerName = passengerNameInput
-          ? passengerNameInput.value.trim()
-          : "Voucher";
+    const passengerNameInput = document.querySelector("#subAgent");
+    let passengerName = passengerNameInput
+        ? passengerNameInput.value.trim()
+        : "Voucher";
 
-        passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+    passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
 
-        // Set the voucher to be visible (but off-screen) for html2canvas
-        const voucher = document.querySelector(".voucher");
-        voucher.style.display = "block";
-        voucher.style.position = "absolute";
-        voucher.style.left = "-9999px";
+    // Set the voucher to be visible (but off-screen) for html2canvas
+    const voucher = document.querySelector(".voucher");
+    voucher.style.display = "block";
+    voucher.style.position = "absolute";
+    voucher.style.left = "-9999px";
 
-        html2canvas(voucher, {
-          scale: 2, // Improves the resolution of the rendered canvas
-          windowWidth: 210 * 3.78,
-        }).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
+    html2canvas(voucher, {
+        scale: 2, // Improves the resolution of the rendered canvas
+        windowWidth: voucher.scrollWidth, // Captures full width
+        windowHeight: voucher.scrollHeight, // Captures full height
+    }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-          // Use jsPDF to create a PDF
-          const pdf = new jsPDF({
+        const pdf = new jsPDF({
             orientation: "portrait",
             unit: "mm",
             format: "a4",
-          });
-
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = pdf.internal.pageSize.getHeight();
-
-          // Calculate aspect ratio of canvas to fit into PDF dimensions
-          const imgWidth = pdfWidth;
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-          // Add the image to the PDF
-          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-
-          // Save the PDF
-          pdf.save(`${passengerName}_Voucher.pdf`);
-
-          // Reset the voucher display
-          voucher.style.position = "static";
-          voucher.style.left = "auto";
         });
-      }
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        // Scale canvas height to fit the width proportionally
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let yPosition = 0;
+
+        while (yPosition < imgHeight) {
+            const pageCanvas = document.createElement("canvas");
+            pageCanvas.width = canvas.width;
+            pageCanvas.height = Math.min(
+                canvas.height - yPosition,
+                canvas.width * (pdfHeight / pdfWidth)
+            );
+
+            const ctx = pageCanvas.getContext("2d");
+            ctx.drawImage(
+                canvas,
+                0,
+                yPosition,
+                canvas.width,
+                pageCanvas.height,
+                0,
+                0,
+                pageCanvas.width,
+                pageCanvas.height
+            );
+
+            const pageImgData = pageCanvas.toDataURL("image/png");
+            pdf.addImage(pageImgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+            yPosition += canvas.width * (pdfHeight / pdfWidth);
+            if (yPosition < imgHeight) {
+                pdf.addPage(); // Add new page for remaining content
+            }
+        }
+
+        // Save the PDF
+        pdf.save(`${passengerName}_Voucher.pdf`);
+
+        // Reset the voucher display
+        voucher.style.position = "static";
+        voucher.style.left = "auto";
+    });
+}
 
       // ... (Rest of the JavaScript remains unchanged) ...
 
