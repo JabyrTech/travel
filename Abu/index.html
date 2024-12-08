@@ -12,6 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
       // Initialize jsPDF
       window.jsPDF = window.jspdf.jsPDF;
@@ -391,133 +394,133 @@
       }
 
       #savedVouchers {
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            width: 100%;
-        }
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        width: 100%;
+      }
 
-        .voucher-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            margin: 20px;
-        }
+      .voucher-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        margin: 20px;
+      }
 
-        .voucher-card:hover {
-            transform: translateY(-5px);
-        }
+      .voucher-card:hover {
+        transform: translateY(-5px);
+      }
 
-        .voucher-card img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
+      .voucher-card img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+      }
 
-        .voucher-info {
-            padding: 15px;
-        }
+      .voucher-info {
+        padding: 15px;
+      }
 
-        .voucher-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            color: #333;
-        }
+      .voucher-info h3 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        color: #333;
+      }
 
-        .voucher-info p {
-            margin: 0;
-            font-size: 14px;
-            color: #666;
-        }
+      .voucher-info p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+      }
 
-        #searchBar {
-            width: 90%;
-            padding: 10px;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+      #searchBar {
+        width: 90%;
+        padding: 10px;
+        margin: 20px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
 
-        .no-results {
-            text-align: center;
-            color: #666;
-            margin-top: 20px;
-        }
+      .no-results {
+        text-align: center;
+        color: #666;
+        margin-top: 20px;
+      }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-        }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 800px;
+        position: relative;
+      }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
-        .modal-image {
-            width: 100%;
-            height: auto;
-        }
+      .modal-image {
+        width: 100%;
+        height: auto;
+      }
 
-        .delete-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
 
-        .delete-btn:hover {
-            background-color: #ff1a1a;
-        }
+      .delete-btn:hover {
+        background-color: #ff1a1a;
+      }
 
-        #savedVouchersContainer {
-            margin-top: 20px;
-            padding: 20px;
-            /* background-color: #f0f0f0; */
-            border-radius: 8px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-        }
-        #savedVouchersContainer h2 {
-            margin-bottom: 15px;
-        }
+      #savedVouchersContainer {
+        margin-top: 20px;
+        padding: 20px;
+        /* background-color: #f0f0f0; */
+        border-radius: 8px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      #savedVouchersContainer h2 {
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
@@ -573,7 +576,10 @@
         <div id="flights">
           <h2>Flight Information</h2>
           <div class="form-group flight-group">
-            <h3><span>Depart</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <h3>
+              <span>Depart</span>
+              <span class="remove-button" onclick="removeSection(this)">X</span>
+            </h3>
             <label for="cityFrom">City From:</label>
             <input type="text" class="cityFrom" required />
             <label for="cityTo">City To:</label>
@@ -590,7 +596,10 @@
             <input type="text" class="flightNo" required />
           </div>
           <div class="form-group flight-group">
-            <h3><span>Return</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <h3>
+              <span>Return</span>
+              <span class="remove-button" onclick="removeSection(this)">X</span>
+            </h3>
             <label for="cityFrom">City From:</label>
             <input type="text" class="cityFrom" required value="JEDDAH" />
             <label for="cityTo">City To:</label>
@@ -616,7 +625,10 @@
         <div id="hotels">
           <h2>Hotel Information</h2>
           <div class="form-group hotel-group">
-            <h3><span>Add Madina Hotel</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <h3>
+              <span>Add Madina Hotel</span>
+              <span class="remove-button" onclick="removeSection(this)">X</span>
+            </h3>
             <label for="hotelCity">Hotel City:</label>
             <input type="text" class="hotelCity" required value="MADINA" />
             <label for="hotelName">Hotel Name:</label>
@@ -633,7 +645,10 @@
             <input type="number" class="nights" required value="4" />
           </div>
           <div class="form-group hotel-group">
-            <h3><span>Add Makkah Hotel</span> <span class="remove-button" onclick="removeSection(this)">X</span></h3>
+            <h3>
+              <span>Add Makkah Hotel</span>
+              <span class="remove-button" onclick="removeSection(this)">X</span>
+            </h3>
             <label for="hotelCity">Hotel City:</label>
             <input type="text" class="hotelCity" required value="MAKKAH" />
             <label for="hotelName">Hotel Name:</label>
@@ -649,7 +664,6 @@
             <label for="nights">No. of Nights:</label>
             <input type="number" class="nights" required value="4" />
           </div>
-
         </div>
         <div class="form-group">
           <button type="button" onclick="addHotel()">Add Another Hotel</button>
@@ -695,17 +709,17 @@
             <div class="form-group">
                 <button type="button" onclick="addContact()">Add Another Contact</button>
             </div> -->
-            <div class="form-group">
-                <button type="button" onclick="generateVoucher()">
-                  Generate Voucher
-                </button>
-              </div>
-        
-              <div class="form-group">
-                <button type="button" onclick="downloadVoucher()">
-                  Download Voucher
-                </button>
-              </div>
+        <div class="form-group">
+          <button type="button" onclick="generateVoucher()">
+            Generate Voucher
+          </button>
+        </div>
+
+        <div class="form-group">
+          <button type="button" onclick="downloadVoucher()">
+            Download Voucher
+          </button>
+        </div>
       </form>
     </div>
 
@@ -714,9 +728,7 @@
         <div class="cover">
           <div class="title">
             <div class="company">
-              <h1
-          id="sub-company"
-        ></h1>
+              <h1 id="sub-company"></h1>
             </div>
             <div class="partners">
               <img
@@ -734,7 +746,8 @@
       </header>
       <div class="in">
         <h1
-          style="width: 100%; text-align: center; color: #863a6f" id="sub-companydown"
+          style="width: 100%; text-align: center; color: #863a6f"
+          id="sub-companydown"
         ></h1>
         <div class="personalinfo">
           <div class="info">
@@ -849,26 +862,28 @@
       </div>
     </div>
 
-
-
     <div class="form-group" style="margin-top: 10px; margin-bottom: 50px">
-        <button type="button" onclick="downloadVoucher()">
-          Download Voucher
-        </button>
-      </div>
+      <button type="button" onclick="downloadVoucher()">
+        Download Voucher
+      </button>
+    </div>
 
-      <div id="savedVouchersContainer">
-        <h2>Saved Vouchers</h2>
-        <input type="text" id="searchBar" placeholder="Search by passenger name or subagent...">
-        <div id="savedVouchers"></div>
+    <div id="savedVouchersContainer">
+      <h2>Saved Vouchers</h2>
+      <input
+        type="text"
+        id="searchBar"
+        placeholder="Search by passenger name or subagent..."
+      />
+      <div id="savedVouchers"></div>
     </div>
 
     <div id="voucherModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <img id="modalImage" class="modal-image" src="" alt="Voucher">
-            <button id="deleteVoucher" class="delete-btn">Delete Voucher</button>
-        </div>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modalImage" class="modal-image" src="" alt="Voucher" />
+        <button id="deleteVoucher" class="delete-btn">Delete Voucher</button>
+      </div>
     </div>
 
     <!-- 
@@ -1185,21 +1200,23 @@
         // Function to display the selected image in the qrcode div
       }
 
-      document.getElementById("imageInput").addEventListener("change", (event) => {
-            const file = event.target.files[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                const img = document.createElement("img");
-                img.src = e.target.result;
-                img.alt = "QR Code";
-                img.style.maxWidth = "150px";
-                document.getElementById("qrcode").innerHTML = "";
-                document.getElementById("qrcode").appendChild(img);
-              };
-              reader.readAsDataURL(file);
-            }
-          });
+      document
+        .getElementById("imageInput")
+        .addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const img = document.createElement("img");
+              img.src = e.target.result;
+              img.alt = "QR Code";
+              img.style.maxWidth = "150px";
+              document.getElementById("qrcode").innerHTML = "";
+              document.getElementById("qrcode").appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
 
       // function downloadVoucher() {
       //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
@@ -1211,235 +1228,179 @@
       // }
 
       function downloadVoucher() {
-            const passengerNameInput = document.querySelector("#subAgent");
-            let passengerName = passengerNameInput
-                ? passengerNameInput.value.trim()
-                : "Voucher";
+        const passengerNameInput = document.querySelector("#subAgent");
+        let passengerName = passengerNameInput
+          ? passengerNameInput.value.trim()
+          : "Voucher";
 
-            passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+        passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
 
-            // Set the voucher to be visible (but off-screen) for html2canvas
-            const voucher = document.querySelector(".voucher");
-            voucher.style.display = "block";
-            voucher.style.position = "absolute";
-            voucher.style.left = "-9999px";
+        // Set the voucher to be visible (but off-screen) for html2canvas
+        const voucher = document.querySelector(".voucher");
+        voucher.style.display = "block";
+        voucher.style.position = "absolute";
+        voucher.style.left = "-9999px";
 
-            html2canvas(voucher, {
-                scale: 2,
-                windowWidth: 210 * 3.78, // 210mm in pixels at 96 DPI
-                windowHeight: 297 * 3.78, // 297mm in pixels at 96 DPI (A4 height, will be adjusted)
-            }).then((canvas) => {
-                const imgData = canvas.toDataURL("image/png");
-            
-                const pdf = new jsPDF({
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                });
-            
-                const pdfWidth = 210; // A4 width in mm
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            
-                let currentPage = 0;
-                let heightLeft = pdfHeight;
+        html2canvas(voucher, {
+          scale: 2, // Improves the resolution of the rendered canvas
+          windowWidth: 210 * 3.78,
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
 
-                while (heightLeft > 0) {
-                    if (currentPage > 0) {
-                        pdf.addPage();
-                    }
-                    const position = -currentPage * 297; // 297 is A4 height
-                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                    heightLeft -= 297;
-                    currentPage++;
-                }
-            
-                pdf.save(`${passengerName}_Voucher.pdf`);
+          // Use jsPDF to create a PDF
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
 
-                // Save the image data to localStorage
-                saveVoucherImage(passengerName, imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
 
-                // Reset the voucher display
-                // voucher.style.display = "none";
-                voucher.style.position = "static";
-                voucher.style.left = "auto";
-            });
-        }
+          // Calculate aspect ratio of canvas to fit into PDF dimensions
+          const imgWidth = pdfWidth;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        function displaySavedVouchers(searchTerm = '') {
-            const savedVouchersContainer = document.getElementById('savedVouchers');
-            savedVouchersContainer.innerHTML = '';
+          // Add the image to the PDF
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
-            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
+          // Save the PDF
+          pdf.save(`${passengerName}_Voucher.pdf`);
 
-            if (searchTerm) {
-                savedVouchers = savedVouchers.filter(voucher => 
-                    voucher.firstPassenger.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    voucher.subAgent.toLowerCase().includes(searchTerm.toLowerCase())
-                );
+          // Reset the voucher display
+          voucher.style.position = "static";
+          voucher.style.left = "auto";
+        });
+      }
+
+      // ... (Rest of the JavaScript remains unchanged) ...
+
+      // Service Worker Registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/service-worker.js").then(
+            function (registration) {
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope
+              );
+            },
+            function (err) {
+              console.log("ServiceWorker registration failed: ", err);
             }
+          );
+        });
+      }
 
-            if (savedVouchers.length === 0) {
-                savedVouchersContainer.innerHTML = '<p class="no-results">No vouchers found.</p>';
-                return;
-            }
+      function displaySavedVouchers(searchTerm = "") {
+        const savedVouchersContainer = document.getElementById("savedVouchers");
+        savedVouchersContainer.innerHTML = "";
 
-            savedVouchers.forEach((voucher, index) => {
-                const voucherCard = document.createElement('div');
-                voucherCard.className = 'voucher-card';
-                voucherCard.innerHTML = `
-                    <img src="${voucher.imageData}" alt="Voucher for ${voucher.firstPassenger}">
-                    <div class="voucher-info">
-                        <h3>${voucher.firstPassenger}</h3>
-                        <p>Subagent: ${voucher.subAgent}</p>
-                        <p>Date: ${new Date(voucher.date).toLocaleDateString()}</p>
-                    </div>
-                `;
-                voucherCard.addEventListener('click', () => {
-                    openModal(voucher, index);
-                });
-                savedVouchersContainer.appendChild(voucherCard);
-            });
+        let savedVouchers =
+          JSON.parse(localStorage.getItem("savedVouchers")) || [];
+
+        if (searchTerm) {
+          savedVouchers = savedVouchers.filter(
+            (voucher) =>
+              voucher.firstPassenger
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+              voucher.subAgent.toLowerCase().includes(searchTerm.toLowerCase())
+          );
         }
 
-        function saveVoucherImage(name, imageData) {
-            const subAgent = document.getElementById("subAgent").value;
-            const firstPassenger = document.querySelector(".passengername").value;
-            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
-            savedVouchers.push({ name, imageData, subAgent, firstPassenger, date: new Date().toISOString() });
-            localStorage.setItem('savedVouchers', JSON.stringify(savedVouchers));
-            displaySavedVouchers();
+        if (savedVouchers.length === 0) {
+          savedVouchersContainer.innerHTML =
+            '<p class="no-results">No vouchers found.</p>';
+          return;
         }
 
-        
+        savedVouchers.forEach((voucher, index) => {
+          const voucherCard = document.createElement("div");
+          voucherCard.className = "voucher-card";
+          voucherCard.innerHTML = `
+            <div class="voucher-info">
+                <h3>${voucher.firstPassenger}</h3>
+                <p>Subagent: ${voucher.subAgent}</p>
+                <p>Date: ${new Date(voucher.date).toLocaleDateString()}</p>
+                <button class="view-pdf" data-index="${index}">View PDF</button>
+            </div>
+        `;
 
-
-        function openModal(voucher, index) {
-            const modal = document.getElementById('voucherModal');
-            const modalImg = document.getElementById('modalImage');
-            const deleteBtn = document.getElementById('deleteVoucher');
-
-            modalImg.src = voucher.imageData;
-            modalImg.alt = `Voucher for ${voucher.firstPassenger}`;
-            modal.style.display = 'block';
-
-            deleteBtn.onclick = function() {
-                deleteVoucher(index);
-                modal.style.display = 'none';
-            };
-
-            const span = document.getElementsByClassName('close')[0];
-            span.onclick = function() {
-                modal.style.display = 'none';
-            };
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            };
-        }
-
-        function deleteVoucher(index) {
-            let savedVouchers = JSON.parse(localStorage.getItem('savedVouchers')) || [];
-            savedVouchers.splice(index, 1);
-            localStorage.setItem('savedVouchers', JSON.stringify(savedVouchers));
-            displaySavedVouchers();
-        }
-
-        document.getElementById('searchBar').addEventListener('input', function(e) {
-            displaySavedVouchers(e.target.value);
+          savedVouchersContainer.appendChild(voucherCard);
         });
 
-        // Initial display of saved vouchers
+        // Add event listeners to view PDF buttons
+        document.querySelectorAll(".view-pdf").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const index = this.getAttribute("data-index");
+            openModal(savedVouchers[index], index);
+          });
+        });
+      }
+
+      function saveVoucherPDF(name, pdfData) {
+        const subAgent = document.getElementById("subAgent").value;
+        const firstPassenger = document.querySelector(".passengername").value;
+        let savedVouchers =
+          JSON.parse(localStorage.getItem("savedVouchers")) || [];
+        savedVouchers.push({
+          name,
+          pdfData,
+          subAgent,
+          firstPassenger,
+          date: new Date().toISOString(),
+        });
+        localStorage.setItem("savedVouchers", JSON.stringify(savedVouchers));
         displaySavedVouchers();
+      }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            displaySavedVouchers();
+      function openModal(voucher, index) {
+        const modal = document.getElementById("voucherModal");
+        const modalViewer = document.getElementById("modalViewer");
+        const deleteBtn = document.getElementById("deleteVoucher");
+
+        modalViewer.src = voucher.pdfData;
+        modalViewer.type = "application/pdf";
+        modal.style.display = "block";
+
+        deleteBtn.onclick = function () {
+          deleteVoucher(index);
+          modal.style.display = "none";
+        };
+
+        const span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      }
+
+      function deleteVoucher(index) {
+        let savedVouchers =
+          JSON.parse(localStorage.getItem("savedVouchers")) || [];
+        savedVouchers.splice(index, 1);
+        localStorage.setItem("savedVouchers", JSON.stringify(savedVouchers));
+        displaySavedVouchers();
+      }
+
+      document
+        .getElementById("searchBar")
+        .addEventListener("input", function (e) {
+          displaySavedVouchers(e.target.value);
         });
-      
-      //function downloadVoucher() {
-        // Retrieve the first passenger's name
-      //  const passengerNameInput = document.querySelector("#subAgent");
-       // let passengerName = passengerNameInput
-      //    ? passengerNameInput.value.trim()
-      //    : "Voucher";
 
-       // // Sanitize the filename by replacing any illegal characters
-      //  passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+      // Initial display of saved vouchers
+      displaySavedVouchers();
 
-    //    // Use html2canvas to capture the voucher as an image
-     //   html2canvas(document.querySelector(".voucher"), { scale: 2 }).then((canvas) => {
-    //    const imgData = canvas.toDataURL("image/png");
-      
-   //     // Create a new jsPDF instance with higher DPI
-     //   const pdf = new jsPDF({
-      //    unit: 'mm',
-      //    format: 'a4',
-   //       orientation: 'portrait',
-      //    compress: true,
-     //     precision: 16
-    //    });
-      
-    //    // Add the image to the PDF
-     //   const imgWidth = 190;
-      //  const imgHeight = (canvas.height * imgWidth) / canvas.width;
-     //   pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      
-      //  // Set the download filename to include the passenger's name
-      //  pdf.save(`${passengerName}_Voucher.pdf`);
-   //   });
-
-     // }
-
-      
-
-      //  function downloadVoucher() {
-      //   html2canvas(document.querySelector(".voucher")).then((canvas) => {
-      //     // Convert canvas to base64 image
-      //     const imageData = canvas.toDataURL("image/png");
-
-      //     // Send image data to the server
-      //     fetch("/save-voucher", {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //       body: JSON.stringify({ image: imageData }),
-      //     })
-      //       .then((response) => response.json())
-      //       .then((data) => {
-      //         if (data.success) {
-      //           alert("Voucher saved successfully!");
-      //           // Download the image
-      //           const link = document.createElement("a");
-      //           link.download = "voucher.png";
-      //           link.href = imageData;
-      //           link.click();
-      //         } else {
-      //           alert("Failed to save voucher.");
-      //         }
-      //       })
-      //       .catch((error) => console.error("Error:", error));
-      //   });
-      // }
-
-      // Function to download the voucher as a PDF
-      //   async function downloadVoucher() {
-      //   // Ensure jsPDF is correctly initialized
-      //   const { jsPDF } = window.jspdf;
-      //   const doc = new jsPDF();
-
-      //   // Select the content to be included in the PDF
-      //   const voucherContent = document.querySelector('.voucher');
-
-      //   // Use the `html` method to render HTML content
-      //   await doc.html(voucherContent, {
-      //     callback: function (doc) {
-      //       doc.save('UmrahVoucher.pdf');
-      //     },
-      //     width: 1000 // Max width of content
-      //   });
-      // }
+      document.addEventListener("DOMContentLoaded", function () {
+        displaySavedVouchers();
+      });
 
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
