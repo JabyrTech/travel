@@ -1228,79 +1228,75 @@
       // }
 
       function downloadVoucher() {
-    const passengerNameInput = document.querySelector("#subAgent");
-    let passengerName = passengerNameInput
-        ? passengerNameInput.value.trim()
-        : "Voucher";
-
-    passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
-
-    // Set the voucher to be visible (but off-screen) for html2canvas
-    const voucher = document.querySelector(".voucher");
-    voucher.style.display = "block";
-    voucher.style.position = "absolute";
-    voucher.style.left = "-9999px";
-
-    html2canvas(voucher, {
-        scale: 2, // Improves the resolution of the rendered canvas
-        windowWidth: voucher.scrollWidth, // Captures full width
-        windowHeight: voucher.scrollHeight, // Captures full height
-    }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "mm",
-            format: "a4",
-        });
-
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        // Scale canvas height to fit the width proportionally
-        const imgWidth = pdfWidth;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        let yPosition = 0;
-
-        while (yPosition < imgHeight) {
-            const pageCanvas = document.createElement("canvas");
-            pageCanvas.width = canvas.width;
-            pageCanvas.height = Math.min(
-                canvas.height - yPosition,
-                canvas.width * (pdfHeight / pdfWidth)
-            );
-
-            const ctx = pageCanvas.getContext("2d");
-            ctx.drawImage(
-                canvas,
-                0,
-                yPosition,
-                canvas.width,
-                pageCanvas.height,
-                0,
-                0,
-                pageCanvas.width,
-                pageCanvas.height
-            );
-
-            const pageImgData = pageCanvas.toDataURL("image/png");
-            pdf.addImage(pageImgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-            yPosition += canvas.width * (pdfHeight / pdfWidth);
-            if (yPosition < imgHeight) {
-                pdf.addPage(); // Add new page for remaining content
+        const passengerNameInput = document.querySelector("#subAgent");
+        let passengerName = passengerNameInput
+            ? passengerNameInput.value.trim()
+            : "Voucher";
+    
+        passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
+    
+        // Make the voucher visible for rendering
+        const voucher = document.querySelector(".voucher");
+        voucher.style.display = "block";
+        voucher.style.position = "absolute";
+        voucher.style.left = "-9999px";
+    
+        html2canvas(voucher, {
+            scale: 2, // High-resolution rendering
+        }).then((canvas) => {
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "a4",
+            });
+    
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+    
+            // Dimensions of the canvas
+            const imgWidth = pdfWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+            let position = 0; // Start position for the image in PDF
+    
+            while (position < imgHeight) {
+                const canvasPortion = document.createElement("canvas");
+                const portionHeight = Math.min(canvas.height - position, canvas.width * (pdfHeight / pdfWidth));
+                canvasPortion.width = canvas.width;
+                canvasPortion.height = portionHeight;
+    
+                const ctx = canvasPortion.getContext("2d");
+                ctx.drawImage(
+                    canvas,
+                    0,
+                    position,
+                    canvas.width,
+                    portionHeight,
+                    0,
+                    0,
+                    canvasPortion.width,
+                    canvasPortion.height
+                );
+    
+                const portionImage = canvasPortion.toDataURL("image/png");
+    
+                pdf.addImage(portionImage, "PNG", 0, 0, pdfWidth, pdfHeight);
+    
+                position += canvas.width * (pdfHeight / pdfWidth);
+                if (position < imgHeight) {
+                    pdf.addPage(); // Add new page for remaining content
+                }
             }
-        }
+    
+            // Save the PDF
+            pdf.save(`${passengerName}_Voucher.pdf`);
+    
+            // Reset voucher visibility
+            voucher.style.position = "static";
+            voucher.style.left = "auto";
+        });
+    }
 
-        // Save the PDF
-        pdf.save(`${passengerName}_Voucher.pdf`);
-
-        // Reset the voucher display
-        voucher.style.position = "static";
-        voucher.style.left = "auto";
-    });
-}
 
       // ... (Rest of the JavaScript remains unchanged) ...
 
