@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
 
     <script>
       // Initialize jsPDF
@@ -1232,69 +1234,31 @@
         let passengerName = passengerNameInput
             ? passengerNameInput.value.trim()
             : "Voucher";
-    
+
         passengerName = passengerName.replace(/[^a-zA-Z0-9]/g, "_");
-    
-        // Make the voucher visible for rendering
+
         const voucher = document.querySelector(".voucher");
-        voucher.style.display = "block";
-        voucher.style.position = "absolute";
-        voucher.style.left = "-9999px";
-    
-        html2canvas(voucher, {
-            scale: 2, // High-resolution rendering
-        }).then((canvas) => {
-            const pdf = new jsPDF({
-                orientation: "portrait",
-                unit: "mm",
-                format: "a4",
+
+        // Define options for html2pdf.js
+        const options = {
+            margin: 10, // Margin around the content in mm
+            filename: `${passengerName}_Voucher.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        };
+
+        // Generate and save the PDF
+        html2pdf()
+            .set(options)
+            .from(voucher)
+            .save()
+            .then(() => {
+                console.log("PDF generated successfully!");
+            })
+            .catch((err) => {
+                console.error("Error generating PDF:", err);
             });
-    
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-    
-            // Dimensions of the canvas
-            const imgWidth = pdfWidth;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-            let position = 0; // Start position for the image in PDF
-    
-            while (position < imgHeight) {
-                const canvasPortion = document.createElement("canvas");
-                const portionHeight = Math.min(canvas.height - position, canvas.width * (pdfHeight / pdfWidth));
-                canvasPortion.width = canvas.width;
-                canvasPortion.height = portionHeight;
-    
-                const ctx = canvasPortion.getContext("2d");
-                ctx.drawImage(
-                    canvas,
-                    0,
-                    position,
-                    canvas.width,
-                    portionHeight,
-                    0,
-                    0,
-                    canvasPortion.width,
-                    canvasPortion.height
-                );
-    
-                const portionImage = canvasPortion.toDataURL("image/png");
-    
-                pdf.addImage(portionImage, "PNG", 0, 0, pdfWidth, pdfHeight);
-    
-                position += canvas.width * (pdfHeight / pdfWidth);
-                if (position < imgHeight) {
-                    pdf.addPage(); // Add new page for remaining content
-                }
-            }
-    
-            // Save the PDF
-            pdf.save(`${passengerName}_Voucher.pdf`);
-    
-            // Reset voucher visibility
-            voucher.style.position = "static";
-            voucher.style.left = "auto";
-        });
     }
 
 
