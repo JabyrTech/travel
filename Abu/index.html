@@ -1230,8 +1230,12 @@
       // }
 
       function downloadVoucher() {
-        const passengerNameInput = document.querySelector("#subAgent");
-        let passengerName = passengerNameInput
+        const passengerNameInput = document.querySelector("#subcompany");
+        let obj = new Date();
+        let day = obj.getUTCDate();
+        let month = obj.getUTCMonth() + 1;
+        let year = obj.getUTCFullYear();
+        let passengerName = passengerNameInput + day +'-'+ month +'-'+ year
             ? passengerNameInput.value.trim()
             : "Voucher";
 
