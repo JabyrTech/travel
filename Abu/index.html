@@ -1230,7 +1230,7 @@
       // }
 
       function downloadVoucher() {
-        const passengerNameInput = document.querySelector("#subcompany");
+        const passengerNameInput = document.querySelector("#subAgent");
         let obj = new Date();
         let day = obj.getUTCDate();
         let month = obj.getUTCMonth() + 1;
@@ -1249,7 +1249,7 @@
             filename: `${passengerName}_Voucher.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: [250, 297], orientation: 'portrait' },
+            jsPDF: { unit: 'mm', format: [300, 350], orientation: 'portrait' },
         };
 
         // Generate and save the PDF
