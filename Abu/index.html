@@ -1249,7 +1249,7 @@
             filename: `${passengerName}_Voucher.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            jsPDF: { unit: 'mm', format: [250, 297], orientation: 'portrait' },
         };
 
         // Generate and save the PDF
