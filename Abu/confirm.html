@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voucher Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f6f4;
+            color: #6a5344;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: url('Black_and_Blue_Airplane_Travel_Logo-removebg-preview (2).png') no-repeat center center;
+            background-size: contain;
+            border: 2px solid #6a5344;
+            border-radius: 50%;
+        }
+        .message {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .icons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .icons i {
+            font-size: 24px;
+            color: #6a5344;
+            transition: transform 0.3s ease;
+        }
+        .icons i:hover {
+            transform: scale(1.2);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo"></div>
+        <h1>Voucher Confirmation</h1>
+        <p class="message">The Scanned Voucher is a valid voucher from <strong>ABUKHALID TRAVELLING AGENCY</strong>.</p><br>
+
+        <p>For more details, contact:</p>
+        <h4>+966 56 6092788</h4>
+        <div class="icons">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-plane"></i>
+            <i class="fas fa-passport"></i>
+        </div>
+    </div>
+</body>
+</html>
