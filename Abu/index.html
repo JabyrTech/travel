@@ -1245,11 +1245,11 @@
 
         // Define options for html2pdf.js
         const options = {
-            margin: 1, // Margin around the content in mm
+            margin: 0, // Margin around the content in mm
             filename: `${passengerName}_Voucher.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: [250, 297], orientation: 'portrait' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         };
 
         // Generate and save the PDF
