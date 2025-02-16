@@ -16,7 +16,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-
     <script>
       // Initialize jsPDF
       window.jsPDF = window.jspdf.jsPDF;
@@ -31,7 +30,6 @@
         align-items: center;
         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
         font-size: 130%;
-        
       }
 
       .form-container {
@@ -84,13 +82,22 @@
         height: fit-content;
         padding-bottom: 20px;
         font-size: 150% !important;
-        p, h1, h2, h3, h4, h5, h6, span, a, table {
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        span,
+        a,
+        table {
           font-size: 120% !important;
         }
-        
       }
 
-      td, th {
+      td,
+      th {
         font-size: 45% !important;
       }
 
@@ -545,16 +552,16 @@
       }
 
       .ramadan img {
-        height:  400px;
+        height: 400px;
       }
 
-      .ramadan img:nth-child(2){
+      .ramadan img:nth-child(2) {
         height: 120px;
       }
 
       .ramadan img:nth-child(1) {
-    transform: rotateY(180deg);
-}
+        transform: rotateY(180deg);
+      }
     </style>
   </head>
   <body>
@@ -760,11 +767,14 @@
     <div class="voucher" style="display: block" id="voucherr">
       <header>
         <div class="ramadan">
-            <img src="KYAULANCE__5_-removebg-preview.png" alt="">
-            <img src="Pink_Floral_Modern_Beauty_Salon_and_Spa_Flyer__11_-removebg-preview.png" alt="">
-            <img src="KYAULANCE__5_-removebg-preview.png" alt="">
-            </div>
-        
+          <img src="KYAULANCE__5_-removebg-preview.png" alt="" />
+          <img
+            src="Pink_Floral_Modern_Beauty_Salon_and_Spa_Flyer__11_-removebg-preview.png"
+            alt=""
+          />
+          <img src="KYAULANCE__5_-removebg-preview.png" alt="" />
+        </div>
+
         <div class="cover">
           <div class="title">
             <div class="company">
@@ -898,7 +908,7 @@
           </div>
 
           <div id="qrcode">
-            <img src="Confirmation.png" alt="QRCODE">
+            <img src="Confirmation.png" alt="QRCODE" />
           </div>
         </div>
       </div>
@@ -1275,7 +1285,8 @@
         let day = obj.getUTCDate();
         let month = obj.getUTCMonth() + 1;
         let year = obj.getUTCFullYear();
-        let passengerName = passengerNameInput + day +'-'+ month +'-'+ year
+        let passengerName =
+          passengerNameInput + day + "-" + month + "-" + year
             ? passengerNameInput.value.trim()
             : "Voucher";
 
@@ -1285,26 +1296,25 @@
 
         // Define options for html2pdf.js
         const options = {
-            margin: 0, // Margin around the content in mm
-            filename: `${passengerName}_Voucher.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: [210, 350], orientation: 'portrait' },
+          margin: 0, // Margin around the content in mm
+          filename: `${passengerName}_Voucher.pdf`,
+          image: { type: "jpeg", quality: 0.99 },
+          html2canvas: { scale: 2 }, // Keep the original scale of content
+          jsPDF: { unit: "mm", format: [238.12, 350], orientation: "portrait" },
         };
 
         // Generate and save the PDF
         html2pdf()
-            .set(options)
-            .from(voucher)
-            .save()
-            .then(() => {
-                console.log("PDF generated successfully!");
-            })
-            .catch((err) => {
-                console.error("Error generating PDF:", err);
-            });
-    }
-
+          .set(options)
+          .from(voucher)
+          .save()
+          .then(() => {
+            console.log("PDF generated successfully!");
+          })
+          .catch((err) => {
+            console.error("Error generating PDF:", err);
+          });
+      }
 
       // ... (Rest of the JavaScript remains unchanged) ...
 
